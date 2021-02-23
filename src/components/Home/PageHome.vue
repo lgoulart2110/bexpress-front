@@ -3,15 +3,11 @@
     <NavigationDrawer :drawer="drawer" :funcaoNavegar="changeNavegacao" />
     <AppBar :funcaoNavegar="changeNavegacao" />
     
-
-    <!-- Sizes your content based upon application components -->
-    <v-main>
-      <!-- Provides the application the proper gutter -->
-      <v-container fluid>
-        <!-- If using vue-router -->
+    <v-container fluid>
+      <transition>
         <router-view></router-view>
-      </v-container>
-    </v-main>
+      </transition>
+    </v-container>
 
     <v-footer app>
     </v-footer>

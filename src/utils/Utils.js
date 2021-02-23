@@ -58,5 +58,15 @@ export default {
       text: mensagem,
       icon: 'warning'
     });
+  },
+  confirmar(mensagem) {
+    return Vue.swal({
+      icon: 'question',
+      title: 'Deseja realmente realizar essa ação?',
+      text: mensagem,
+      showCancelButton: true,
+      confirmButtonText: `Sim`,
+      denyButtonText: `Não`,
+    });
   }
 }

@@ -3,19 +3,26 @@ import VueRouter from 'vue-router';
 import store from '../store/index';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
+import Categoria from '../components/Compartilhado/Categoria.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: Login
   },
   {
-    path: '/loja',
+    path: '/',
     name: 'Loja',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: 'categoria',
+        component: Categoria
+      }
+    ]
   }
 ];
 
@@ -29,15 +36,14 @@ router.beforeEach((to, from, next) => {
   const token = store.state.token;
 
   if (token) store.dispatch('setarBerarToken', token);
-  
+
   if (to.name !== 'Login' && !token) {
-    next('/');
+    next({name: 'Login'});
   } else if (to.name === 'Login' && token) {
-    next('/loja');
+    next({name: 'Loja'});
   } else {
     next();
-  }
-  
+  }  
 });
 
 export default router;

@@ -2,7 +2,8 @@ const state = {
   usuario: {},
   pessoa: {},
   carrinhoCompras: {},
-  token: ''
+  token: '',
+  categorias: [],
 };
 
 export default state;

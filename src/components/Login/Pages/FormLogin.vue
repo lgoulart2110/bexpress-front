@@ -82,7 +82,7 @@ export default {
       
       try {
         await this.$store.dispatch('realizarLogin', this.loginDto);
-        this.$router.push('/loja');
+        this.$router.push({ name: 'Loja' });
       } catch (error) {
         Utils.mensagemErro(error);
       }

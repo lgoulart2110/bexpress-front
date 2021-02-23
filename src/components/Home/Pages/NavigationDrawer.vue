@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    absolute
+    app
     class="elevation-6"
   >
     <div class="text-center mt-3">
@@ -26,6 +26,7 @@
           <v-list-item
             v-for="child in item.items"
             :key="child.title"
+            @click="navegar(child.action)"
           >
             <v-list-item-content>
               <v-list-item-title v-text="child.title"></v-list-item-title>
@@ -41,6 +42,7 @@
             v-for="(item, i) in items"
             :key="i"
             class="elevation-1"
+            @click="navegar(item.action)"
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
@@ -68,14 +70,16 @@ export default {
     ehAdministrador: false,
     selectedItem: 0,
     items: [
-      { text: 'Produtos', icon: 'mdi-glass-cocktail' },
+      { text: 'Produtos', icon: 'mdi-glass-cocktail', action: 'produtos' },
     ],
     itemsAdministrador: [
       {
         title: 'Administração',
         action: 'mdi-ticket',
         items: [
-          { title: 'List Item' }
+          { title: 'Categorias', action: 'categoria' },
+          { title: 'Produtos', action: 'produtos' },
+          { title: 'Usuários', action: 'usuarios' },
         ],
       }
     ]
@@ -85,21 +89,18 @@ export default {
     funcaoNavegar: Function
   },
   methods: {
-    navegar() {
+    navegar(rota) {
       const windowWidth = window.innerWidth;
       if (windowWidth < 960) this.funcaoNavegar();
+      this.$router.push(rota);
     },
     sair() {
       this.$store.dispatch('realizarLogout');
-      this.$router.push('/');
-    },
-    verificaAdministracao() {
-      const usuario = this.$store.state.usuario;
-      if (usuario.tipoUsuario == 0) this.ehAdministrador = true;
+      this.$router.push({ name: 'Login' });
     }
   },
   mounted () {
-    this.verificaAdministracao();
+    this.ehAdministrador = this.$store.state.usuario.tipoUsuario == 0;
   }
 }
 </script>

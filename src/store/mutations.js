@@ -10,6 +10,16 @@ const mutations = {
   },
   setarToken(state, token) {
     state.token = token;
+  },
+  setarCategoria(state, categorias) {
+    state.categorias = categorias;
+  },
+  adicionarCategoria(state, categoria) {
+    state.categorias.push(categoria);
+  },
+  removerCategoria(state, categoria) {
+    const index = state.categorias.indexOf(categoria);
+    state.categorias.splice(index, 1);
   }
 };
 
