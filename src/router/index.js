@@ -4,6 +4,8 @@ import store from '../store/index';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
 import Categoria from '../components/Compartilhado/Categoria.vue';
+import Produto from '../components/Compartilhado/Produto.vue';
+import Usuario from '../components/Compartilhado/Usuario.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +23,14 @@ const routes = [
       {
         path: 'categoria',
         component: Categoria
+      },
+      {
+        path: 'produto',
+        component: Produto
+      },
+      {
+        path: 'usuario',
+        component: Usuario
       }
     ]
   }

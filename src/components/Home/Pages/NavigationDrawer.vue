@@ -12,7 +12,6 @@
         <v-list-group
           v-for="item in itemsAdministrador"
           :key="item.title"
-          v-model="selectedItem"
           :prepend-icon="item.action"
           no-action
           class="elevation-1 mb-3"
@@ -35,7 +34,6 @@
         </v-list-group>
       </div>
       <v-list-item-group
-          v-model="selectedItem"
           color="green"
         >
           <v-list-item
@@ -70,7 +68,7 @@ export default {
     ehAdministrador: false,
     selectedItem: 0,
     items: [
-      { text: 'Produtos', icon: 'mdi-glass-cocktail', action: 'produtos' },
+      { text: 'Bebidas', icon: 'mdi-glass-cocktail', action: 'produto' },
     ],
     itemsAdministrador: [
       {
@@ -78,8 +76,8 @@ export default {
         action: 'mdi-ticket',
         items: [
           { title: 'Categorias', action: 'categoria' },
-          { title: 'Produtos', action: 'produtos' },
-          { title: 'Usuários', action: 'usuarios' },
+          { title: 'Bebidas', action: 'produto' },
+          { title: 'Usuários', action: 'usuario' },
         ],
       }
     ]

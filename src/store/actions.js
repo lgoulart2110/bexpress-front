@@ -1,9 +1,5 @@
-import axios from 'axios';
+import api from '@/api/index.js';
 import Utils from '@/utils/Utils.js';
-
-const api = axios.create({
-  baseURL: 'https://localhost:44314/api/'
-});
 
 const setBearerToken = (token) => api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -23,7 +19,6 @@ const actions = {
     context.dispatch('setarBerarToken', usuario.token);
     context.commit('setarCarrinho', usuario.carrinhoCompras);
     context.commit('setarPessoa', usuario.pessoa);
-    context.commit('setarCategoria', usuario.categorias);
     usuario.token = '';
     usuario.carrinhoCompras = null;
     usuario.pessoa = null;
@@ -42,11 +37,9 @@ const actions = {
     context.commit('setarCarrinho', {});
     context.commit('setarPessoa', {});
     context.commit('setarUsuario', {});
-    context.commit('setarCategoria', []);
   },
   async cadastrarCategoria(context, categoria) {
-    await api.post('categoria', categoria).then(({data}) => {
-      context.commit('adicionarCategoria', data);
+    await api.post('categoria', categoria).then(() => {
       Utils.mensagemSucesso('Categoria cadastrada com sucesso!');
     }).catch(error => {
       throw error.response.data;
@@ -62,7 +55,6 @@ const actions = {
   async deletarCategoria(context, categoria) {
     await api.delete('categoria/' + categoria.id).then(() => {
       Utils.mensagemSucesso('Categoria atualizada com sucesso!');
-      context.commit('removerCategoria', categoria);
     }).catch(error => {
       throw error.response.data;
     });

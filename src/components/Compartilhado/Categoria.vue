@@ -2,7 +2,7 @@
   <div class="elevation-2 px-2">
     <h1 class="display-2">Categorias</h1>
     <ModalCategoria ref="modalCategoria" :categoria="categoria" :limparObjeto="limparObjeto" />
-    <v-simple-table>
+    <v-simple-table dense>
       <template v-slot:default>
         <thead>
           <tr>
@@ -37,25 +37,31 @@
         </tbody>
       </template>
     </v-simple-table>
+    <Paginacao :pagina="pagina" :totalPaginas="totalPaginas" :mudarPagina="mudarPagina" />
   </div>
 </template>
 
 <script>
 import ModalCategoria from './Pages/ModalCategoria.vue';
+import Paginacao from './Pages/Paginacao.vue';
 import Utils from '@/utils/Utils.js';
+import service from '@/components/services.js';
 
 export default {
   components: {
-    ModalCategoria
+    ModalCategoria,
+    Paginacao
   },
   data: () => ({
     ehAdiministrador: false,
     categoria: {},
-    categorias: []
+    categorias: [],
+    pagina: 1,
+    totalPaginas: 1,
   }),
   mounted () {
     this.ehAdministrador = this.$store.state.usuario.tipoUsuario == 0;
-    this.categorias = this.$store.state.categorias;
+    this.obterCategorias();
   },
   methods: {
     editarCategoria(categoriaEditar) {
@@ -65,16 +71,30 @@ export default {
     },
     limparObjeto() {
       this.categoria = {};
+      this.obterCategorias(this.pagina);
     },
     async removerCategoria(categoriaRemover) {
-      console.log(categoriaRemover);
       Utils.confirmar(
         'Ao inativar essa categoria, todos os produtos relaciondos a ela também serão inativados. Deseja continuar?',
       ).then(async (result) => {
         if (result.isConfirmed) {
           await this.$store.dispatch('deletarCategoria', categoriaRemover);
+          this.limparObjeto();
         } 
       });
+    },
+    async obterCategorias() {
+      await service.getCategoriasPaginada(this.pagina, 10).then(({data}) => {
+        this.pagina = data.pagina;
+        this.totalPaginas = data.totalPaginas;
+        this.categorias = data.dados;
+      }).catch(error => {
+        Utils.mensagemErro(error.response.data);
+      });
+    },
+    async mudarPagina(paginas) {
+      this.pagina = paginas;
+      await this.obterCategorias();
     }
   }
 }
