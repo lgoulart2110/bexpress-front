@@ -66,7 +66,7 @@ export default {
       text: mensagem,
       showCancelButton: true,
       confirmButtonText: `Sim`,
-      denyButtonText: `Não`,
+      cancelButtonText: `Não`,
     });
   }
 }

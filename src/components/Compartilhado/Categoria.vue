@@ -1,6 +1,6 @@
 <template>
   <div class="elevation-2 px-2">
-    <h1 class="display-2">Categorias</h1>
+    <h1 class="display-1">Categorias</h1>
     <ModalCategoria ref="modalCategoria" :categoria="categoria" :limparObjeto="limparObjeto" />
     <v-simple-table dense>
       <template v-slot:default>

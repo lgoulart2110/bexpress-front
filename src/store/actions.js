@@ -18,6 +18,7 @@ const actions = {
   setarUsuario(context, usuario) {
     context.dispatch('setarBerarToken', usuario.token);
     context.commit('setarCarrinho', usuario.carrinhoCompras);
+    context.commit('setarQuantidadeItems', usuario.carrinhoCompras.itemVendas.length);
     context.commit('setarPessoa', usuario.pessoa);
     usuario.token = '';
     usuario.carrinhoCompras = null;
@@ -37,6 +38,7 @@ const actions = {
     context.commit('setarCarrinho', {});
     context.commit('setarPessoa', {});
     context.commit('setarUsuario', {});
+    context.commit('setarQuantidadeItems', 0);
   },
   async cadastrarCategoria(context, categoria) {
     await api.post('categoria', categoria).then(() => {
@@ -57,6 +59,12 @@ const actions = {
       Utils.mensagemSucesso('Categoria atualizada com sucesso!');
     }).catch(error => {
       throw error.response.data;
+    });
+  },
+  async atualizarCarrinho(context) {
+    await api.get('carrinhoCompras').then(({data}) => {
+      context.commit('setarCarrinho', data);
+      context.commit('setarQuantidadeItems', data.itemVendas.length);
     });
   }
 };

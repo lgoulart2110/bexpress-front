@@ -1,6 +1,6 @@
 <template>
   <div class="elevation-2 px-2">
-    <h1 class="display-2">Usuários</h1>
+    <h1 class="display-1">Usuários</h1>
     <br>
     <v-simple-table dense>
       <template v-slot:default>

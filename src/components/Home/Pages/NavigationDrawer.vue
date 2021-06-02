@@ -68,6 +68,7 @@ export default {
     ehAdministrador: false,
     selectedItem: 0,
     items: [
+      { text: 'Minha Conta', icon: 'mdi-account', action: 'perfil' },
       { text: 'Bebidas', icon: 'mdi-glass-cocktail', action: 'produto' },
     ],
     itemsAdministrador: [
@@ -76,7 +77,6 @@ export default {
         action: 'mdi-ticket',
         items: [
           { title: 'Categorias', action: 'categoria' },
-          { title: 'Bebidas', action: 'produto' },
           { title: 'Usuários', action: 'usuario' },
         ],
       }

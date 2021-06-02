@@ -1,12 +1,12 @@
 <template>
   <div class="elevation-2 px-2">
-    <h1 class="display-2">Bebidas</h1>
+    <h1 class="display-1">Bebidas</h1>
     <div v-if="ehAdministrador">
-      <ModalProduto :produto="produto" :limparObjeto="limparObjeto" />
+      <ModalProduto :produto="produto" :limparObjeto="limparObjeto" :abrirDialog="abrirDialog" :fecharDialog="fecharDialog" :dialog="dialog" :mostraFoto="mostraFoto" />
     </div>
     <v-row>      
       <v-col cols="12" md="3" v-for="item in produtos" v-bind:key="item.id">
-        <CardProduto :produto="item" />
+        <CardProduto :produto="item" :removerProduto="removerProduto" :editarProduto="editarProduto" />
       </v-col>
     </v-row>
     <Paginacao :pagina="pagina" :totalPaginas="totalPaginas" :mudarPagina="mudarPagina" />
@@ -32,6 +32,8 @@ export default {
     pagina: 1,
     totalPaginas: 1,
     ehAdministrador: true,
+    dialog: false,
+    mostraFoto: true
   }),
   mounted () {
     this.obterProdutos();
@@ -40,6 +42,7 @@ export default {
     limparObjeto() {
       this.produto = {};
       this.obterProdutos();
+      this.verificaFoto();
     },
     async removerProduto(produtoRemover) {
       Utils.confirmar(
@@ -66,6 +69,24 @@ export default {
     async mudarPagina(paginas) {
       this.pagina = paginas;
       await this.obterProdutos();
+    },
+    async editarProduto(produto) {
+      this.produto = produto;
+      this.dialog = true;
+      this.verificaFoto();
+    },
+    abrirDialog() {
+      this.dialog = true;
+      this.verificaFoto();
+    },
+    async fecharDialog() {
+      this.limparObjeto();
+      this.dialog = false;
+      this.verificaFoto();
+      await this.obterProdutos();
+    },
+    verificaFoto() {
+      this.mostraFoto = this.produto.id == 0 || this.produto.id == undefined || this.produto.id == null;
     }
   }
 }

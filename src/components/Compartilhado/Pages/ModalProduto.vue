@@ -1,10 +1,8 @@
 <template>
   <v-row justify="end">
     <v-col cols="auto">
+      <v-btn color="primary" @click="abrirDialog">Adicionar</v-btn>
       <v-dialog v-model="dialog" transition="dialog-top-transition" max-width="600">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" v-bind="attrs" v-on="on">Adicionar</v-btn>
-        </template>
         <template>
           <v-card>
             <v-toolbar color="primary" dark>Produto</v-toolbar>
@@ -55,7 +53,17 @@
                   v-money="money"
                   @keydown="$event.key === '-' ? $event.preventDefault() : null"
                 />
+                <v-text-field
+                  label="Quantidade em estoque"
+                  name="quantidadeEstoque"
+                  prepend-icon="mdi-clipboard-edit"
+                  type="number"
+                  color="black"
+                  :rules="valida.quantidadeEstoque"
+                  v-model="produto.quantidadeEstoque"
+                />
                 <v-file-input
+                  v-if="mostraFoto"
                   small-chips
                   label="Imagem do produto"
                   v-model="produto.imagem"
@@ -82,6 +90,10 @@ export default {
   props: {
     produto: Object,
     limparObjeto: Function,
+    abrirDialog: Function,
+    fecharDialog: Function,
+    dialog: Boolean,
+    mostraFoto: Boolean
   },
   data: () => ({
     money: {
@@ -94,7 +106,6 @@ export default {
     },
     categorias: [],
     categoria: {},
-    dialog: false,
     formValido: true,
     ocupado: false,
     valida: {
@@ -111,6 +122,10 @@ export default {
       preco: [
         v => !!v || 'Preço é obrigatório.',
         v => v && v != 'R$ 0,00' || 'O preço deve ser maior que R$ 0,00'
+      ],
+      quantidadeEstoque: [
+        v => !!v || 'Quantidade em estoque é obrigatório.',
+        v => v > 0 || 'Quantidade em estoque não pode ser menor ou igual a 0'
       ]
     },
   }),
@@ -119,21 +134,24 @@ export default {
       var validacao = this.$refs.formProduto.validate();
       if (!validacao) return;
       this.ocupado = true;
-      
-      await service.adicionarProduto(this.produto).then(() => {
-        Utils.mensagemSucesso("Produto adicionado com sucesso!");
-      }).catch(error => {
-        Utils.mensagemErro(error.response.data);
-      });
+
+      if (this.produto.id !== 0 && this.produto.id !== undefined) {
+        await service.alterarProduto(this.produto).then(() => {
+          Utils.mensagemSucesso("Produto alterado com sucesso!");
+          this.fecharDialog();
+        }).catch(error => {
+          Utils.mensagemErro(error.response.data);
+        });
+      } else {
+        await service.adicionarProduto(this.produto).then(() => {
+          Utils.mensagemSucesso("Produto adicionado com sucesso!");
+          this.fecharDialog();
+        }).catch(error => {
+          Utils.mensagemErro(error.response.data);
+        });
+      }
 
       this.ocupado = false;
-    },
-    abrirDialog() {
-      this.dialog = true;
-    },
-    fecharDialog() {
-      this.limparObjeto();
-      this.dialog = false;
     },
     async carregaCategorias() {
       await service.getCategorias().then(({data}) => {

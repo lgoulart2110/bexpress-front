@@ -10,6 +10,9 @@ const mutations = {
   },
   setarToken(state, token) {
     state.token = token;
+  },
+  setarQuantidadeItems(state, quantidadeItems) {
+    state.quantidadeItems = quantidadeItems;
   }
 };
 
