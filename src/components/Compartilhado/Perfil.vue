@@ -1,6 +1,7 @@
 <template>
   <div class="elevation-2 px-2">
     <h1 class="display-1">Perfil</h1>
+    <ModalAlterarSenha />
     <br>
     <v-row>
       <v-col cols="12" md="6">
@@ -53,10 +54,12 @@
 <script>
 import moment from 'moment';
 import Endereco from './Endereco.vue';
+import ModalAlterarSenha from './Pages/ModalAlterarSenha.vue';
 
 export default {
   components: {
-    Endereco
+    Endereco,
+    ModalAlterarSenha
   },
   data: () => ({
     pessoa: {},

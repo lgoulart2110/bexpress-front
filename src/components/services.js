@@ -13,7 +13,7 @@ const service = {
     return await api.delete(`usuario/${id}`);
   },
   async getProdutosPaginado(categoriaId, pagina, quantidade) {
-    var url = `produto/produtos?pagina=${pagina}&quantidadePagina=${quantidade}`;
+    var url = `produto/produtos?pagina=${pagina}&quantidadePagina=${quantidade}&categoriaId=${categoriaId}`;
     if (categoriaId) url = `${url}&categoriaId=${categoriaId}`;
     return await api.get(url);
   },
@@ -65,6 +65,24 @@ const service = {
   },
   async calcularFrete() {
     return await api.post('carrinhoCompras/frete');
+  },
+  async obterPedidos(pagina, quantidade) {
+    return await api.get(`pedido?pagina=${pagina}&quantidade=${quantidade}`);
+  },
+  async cancelarPedido(pedidoId) {
+    return await api.put(`pedido/cancelar/${pedidoId}`);
+  },
+  async enviarPedido(pedidoId) {
+    return await api.put(`pedido/enviar/${pedidoId}`);
+  },
+  async finalizarPedido(pedidoId) {
+    return await api.put(`pedido/finalizar/${pedidoId}`);
+  },
+  async aceitarPedido(pedidoId) {
+    return await api.put(`pedido/aceitar/${pedidoId}`);
+  },
+  async alterarSenha(alterarSenhaDto) {
+    return await api.put('usuario', alterarSenhaDto);
   }
 };
 

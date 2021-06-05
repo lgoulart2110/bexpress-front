@@ -4,10 +4,12 @@ import store from '../store/index';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
 import Categoria from '../components/Compartilhado/Categoria.vue';
+import Propaganda from '../components/Compartilhado/Propaganda.vue';
 import Produto from '../components/Compartilhado/Produto.vue';
 import Usuario from '../components/Compartilhado/Usuario.vue';
 import Perfil from '../components/Compartilhado/Perfil.vue';
 import Carrinho from '../components/Compartilhado/Carrinho.vue';
+import Pedidos from '../components/Compartilhado/Pedidos.vue';
 import api from '@/api/index.js';
 import Utils from '@/utils/Utils.js';
 
@@ -20,10 +22,18 @@ const routes = [
     component: Login
   },
   {
-    path: '/',
+    path: '',
     name: 'Loja',
     component: Home,
     children: [
+      {
+        path: '',
+        redirect: 'propaganda'
+      },
+      {
+        path: 'propaganda',
+        component: Propaganda
+      },
       {
         path: 'categoria',
         component: Categoria
@@ -43,6 +53,10 @@ const routes = [
       {
         path: 'carrinho',
         component: Carrinho
+      },
+      {
+        path: 'pedidos',
+        component: Pedidos
       }
     ]
   }

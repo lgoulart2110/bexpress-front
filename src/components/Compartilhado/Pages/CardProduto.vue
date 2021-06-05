@@ -37,8 +37,8 @@
     </v-card-actions>
 
     <v-img
-      width="100"
       height="100"
+      width="150"
       :src="`https://localhost:44314/api/imagem/${produto.imagem}`"
     ></v-img>
 

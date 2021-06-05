@@ -32,7 +32,6 @@
             v-model="loginDto.senha"
           />
         </v-form>
-        <h3 class="text-center mt-4">Esqueceu sua senha?</h3>
       </v-card-text>
       <div class="text-center mt-3 mb-3">
         <v-btn color="black" dark :loading="ocupado" @click="realizarLogin">Entrar</v-btn>
@@ -82,7 +81,7 @@ export default {
       
       try {
         await this.$store.dispatch('realizarLogin', this.loginDto);
-        this.$router.push({ name: 'Loja' });
+        this.$router.push('propaganda');
       } catch (error) {
         Utils.mensagemErro(error);
       }

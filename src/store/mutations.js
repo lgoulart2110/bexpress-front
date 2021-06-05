@@ -13,6 +13,9 @@ const mutations = {
   },
   setarQuantidadeItems(state, quantidadeItems) {
     state.quantidadeItems = quantidadeItems;
+  },
+  setarPedidos(state, pedidos) {
+    state.pedidos = pedidos;
   }
 };
 

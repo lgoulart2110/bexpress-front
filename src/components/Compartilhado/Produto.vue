@@ -4,6 +4,31 @@
     <div v-if="ehAdministrador">
       <ModalProduto :produto="produto" :limparObjeto="limparObjeto" :abrirDialog="abrirDialog" :fecharDialog="fecharDialog" :dialog="dialog" :mostraFoto="mostraFoto" />
     </div>
+    <v-row justify="space-around">
+      <v-col
+        cols="12"
+      >
+        <v-sheet
+          elevation="2"
+          class="py-4 px-1"
+        >
+          <v-chip-group
+            active-class="white--text green darken-4"
+            v-model="categoriaAtiva"
+            mandatory
+          >
+            <v-chip
+              v-for="categoria in categorias"
+              :key="categoria.id"
+              :value="categoria.id"
+              @click="mudarCategoria(categoria)"
+            >
+              {{ categoria.nome }}
+            </v-chip>
+          </v-chip-group>
+        </v-sheet>
+      </v-col>
+    </v-row>
     <v-row>      
       <v-col cols="12" md="3" v-for="item in produtos" v-bind:key="item.id">
         <CardProduto :produto="item" :removerProduto="removerProduto" :editarProduto="editarProduto" />
@@ -33,10 +58,15 @@ export default {
     totalPaginas: 1,
     ehAdministrador: true,
     dialog: false,
-    mostraFoto: true
+    mostraFoto: true,
+    categorias: [
+      { id: 0, nome: 'Todos' }
+    ],
+    categoriaAtiva: 0
   }),
   mounted () {
     this.obterProdutos();
+    this.obterCategorias();
   },
   methods: {
     limparObjeto() {
@@ -58,7 +88,7 @@ export default {
       });
     },
     async obterProdutos() {
-      await service.getProdutosPaginado(this.produto.id, this.pagina, 10).then(({data}) => {
+      await service.getProdutosPaginado(this.categoriaAtiva, this.pagina, 10).then(({data}) => {
         this.pagina = data.pagina;
         this.totalPaginas = data.totalPaginas;
         this.produtos = data.dados;
@@ -87,6 +117,20 @@ export default {
     },
     verificaFoto() {
       this.mostraFoto = this.produto.id == 0 || this.produto.id == undefined || this.produto.id == null;
+    },
+    async obterCategorias() {
+      await service.getCategorias().then(({data}) => {
+        data.forEach(cat => {
+          this.categorias.push({
+            id: cat.id,
+            nome: cat.nome
+          });
+        });
+      });
+    },
+    async mudarCategoria(categoria) {
+      this.categoriaAtiva = categoria.id;
+      await this.obterProdutos();
     }
   }
 }

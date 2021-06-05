@@ -34,7 +34,7 @@
         </v-list-group>
       </div>
       <v-list-item-group
-          color="green"
+          color="green darken-4"
         >
           <v-list-item
             v-for="(item, i) in items"
@@ -70,6 +70,8 @@ export default {
     items: [
       { text: 'Minha Conta', icon: 'mdi-account', action: 'perfil' },
       { text: 'Bebidas', icon: 'mdi-glass-cocktail', action: 'produto' },
+      { text: 'Pedidos', icon: 'mdi-notebook-check', action: 'pedidos' },
+      { text: 'Carrinho de Compras', icon: 'mdi-cart', action: 'carrinho'}
     ],
     itemsAdministrador: [
       {

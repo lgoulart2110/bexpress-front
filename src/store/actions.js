@@ -66,6 +66,11 @@ const actions = {
       context.commit('setarCarrinho', data);
       context.commit('setarQuantidadeItems', data.itemVendas.length);
     });
+  },
+  async obterPedidos(context) {
+    await api.get('pedidos').then(({data}) => {
+      context.commit('setarPedidos', data);
+    });
   }
 };
 

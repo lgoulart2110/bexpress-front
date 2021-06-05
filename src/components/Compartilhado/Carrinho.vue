@@ -55,6 +55,7 @@
       no-data-text="Adicione um endereço para finalizar seu pedido"
       v-model="enderecoId"
       @change="calcularFrete"
+      :disabled="carrinho.itemVendas.length === 0"
     />
     <v-row v-show="enderecoId > 0">  
       <v-col cols="12" md="6">
@@ -76,6 +77,7 @@
           item-value="id"
           no-data-text="Selecione o tipo de pagamento que ira realizar"
           v-model="tipoPagamentoId"
+          :disabled="carrinho.itemVendas.length === 0"
         />
       </v-col>
       <v-col cols="12" md="6" v-show="tipoPagamentoId === 1">
