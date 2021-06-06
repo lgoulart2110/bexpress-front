@@ -73,7 +73,7 @@
           />
           <v-text-field
             id="password"
-            label="Password"
+            label="Senha"
             name="password"
             prepend-icon="lock"
             :append-icon="mostrar ? 'mdi-eye' : 'mdi-eye-off'"
