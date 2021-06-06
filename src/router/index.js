@@ -74,28 +74,32 @@ router.beforeEach((to, from, next) => {
 
   if (token) store.dispatch('setarBerarToken', token);
 
-  api.post('usuario/jwt', usuario)
-  .then(() => {
-    if (to.name !== 'Login' && !token) {
-      next({name: 'Login'});
-    } else if (to.name === 'Login' && token) {
-      next({name: 'Loja'});
-    } else {
-      next();
-    }
-  })
-  .catch(() => {
-    store.dispatch('realizarLogout');
-    if (to.name !== 'Login') {
-      setTimeout(() => {
-        Utils.mensagemErro('Sua sessão expirou, você será redirecionado a tela de login.');
+  if (!token && to.name !== 'Login') {
+    next({name: 'Login'});
+  } else {
+    api.post('usuario/jwt', usuario)
+    .then(() => {
+      if (to.name !== 'Login' && !token) {
         next({name: 'Login'});
-      }, 2000);
-    } else {
-      next();
-    }
-    
-  });
+      } else if (to.name === 'Login' && token) {
+        next({name: 'Loja'});
+      } else {
+        next();
+      }
+    })
+    .catch(() => {
+      store.dispatch('realizarLogout');
+      if (to.name !== 'Login') {
+        setTimeout(() => {
+          Utils.mensagemErro('Sua sessão expirou, você será redirecionado a tela de login.');
+          next({name: 'Login'});
+        }, 2000);
+      } else {
+        next();
+      }
+      
+    });
+  }
 });
 
 export default router;
