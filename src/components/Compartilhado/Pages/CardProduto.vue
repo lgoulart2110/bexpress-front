@@ -37,9 +37,7 @@
     </v-card-actions>
 
     <v-img
-      height="100"
-      width="150"
-      :src="`https://localhost:44314/api/imagem/${produto.imagem}`"
+      :src="`https://storagebexpress.blob.core.windows.net/images/${produto.imagem}`"
     ></v-img>
 
     <v-card-title>{{ produto.nome }}</v-card-title>
