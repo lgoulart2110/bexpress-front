@@ -80,6 +80,7 @@ export default {
         items: [
           { title: 'Categorias', action: 'categoria' },
           { title: 'Usuários', action: 'usuario' },
+          { title: 'Relatórios', action: 'relatorio'}
         ],
       }
     ]

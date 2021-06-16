@@ -83,6 +83,9 @@ const service = {
   },
   async alterarSenha(alterarSenhaDto) {
     return await api.put('usuario', alterarSenhaDto);
+  },
+  async imprimir(relatorio) {
+    return await api.get(`relatorio?tipo=${relatorio.tipo}&dataInicio=${relatorio.dataInicio}&dataFim=${relatorio.dataFim}`, { responseType: 'blob' });
   }
 };
 

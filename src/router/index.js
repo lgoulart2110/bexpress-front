@@ -7,6 +7,7 @@ import Categoria from '../components/Compartilhado/Categoria.vue';
 import Propaganda from '../components/Compartilhado/Propaganda.vue';
 import Produto from '../components/Compartilhado/Produto.vue';
 import Usuario from '../components/Compartilhado/Usuario.vue';
+import Relatorio from '../components/Compartilhado/Relatorio.vue';
 import Perfil from '../components/Compartilhado/Perfil.vue';
 import Carrinho from '../components/Compartilhado/Carrinho.vue';
 import Pedidos from '../components/Compartilhado/Pedidos.vue';
@@ -57,6 +58,10 @@ const routes = [
       {
         path: 'pedidos',
         component: Pedidos
+      },
+      {
+        path: 'relatorio',
+        component: Relatorio
       }
     ]
   }
